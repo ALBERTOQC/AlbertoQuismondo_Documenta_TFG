@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_inicio"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Inicio" />
+        <item
+            android:id="@+id/nav_autonomos"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Autónomos" />
+        <item
+            android:id="@+id/nav_sociedades"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Sociedades" />
+        <item
+            android:id="@+id/nav_documentacion"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Documentación" />
+        <item
+            android:id="@+id/nav_requisitos"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Requisitos legales"/>
+        <item
+            android:id="@+id/nav_configuracion"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Configuración" />
+        <item
+            android:id="@+id/nav_acerca"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Acerca de..."/>
+        <item
+            android:id="@+id/nav_admin"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Admin"/>
+    </group>
+</menu>

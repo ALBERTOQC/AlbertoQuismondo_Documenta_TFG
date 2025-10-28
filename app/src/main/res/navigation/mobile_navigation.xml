@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_inicio">
+
+    <fragment
+        android:id="@+id/nav_inicio"
+        android:name="es.albertqc.albertoquismondo_documenta_tfg.ui.inicio.InicioFragment"
+        android:label="Inicio"
+        tools:layout="@layout/fragment_inicio" />
+
+    <fragment
+        android:id="@+id/nav_autonomos"
+        android:name="es.albertqc.albertoquismondo_documenta_tfg.ui.autonomos.AutonomosFragment"
+        android:label="Autónomos"
+        tools:layout="@layout/fragment_autonomos" />
+
+    <fragment
+        android:id="@+id/nav_sociedades"
+        android:name="es.albertqc.albertoquismondo_documenta_tfg.ui.sociedades.SociedadesFragment"
+        android:label="Sociedades"
+        tools:layout="@layout/fragment_sociedades" />
+    <fragment
+        android:id="@+id/nav_documentacion"
+        android:name="es.albertqc.albertoquismondo_documenta_tfg.ui.documentacion.DocumentacionFragment"
+        android:label="Documentación"
+        tools:layout="@layout/fragment_documentacion" />
+    <fragment
+        android:id="@+id/nav_requisitos"
+        android:name="es.albertqc.albertoquismondo_documenta_tfg.ui.requisitos.RequisitosFragment"
+        android:label="Requisitos"
+        tools:layout="@layout/fragment_requisitos" />
+    <fragment
+        android:id="@+id/nav_configuracion"
+        android:name="es.albertqc.albertoquismondo_documenta_tfg.ui.configuracion.ConfiguracionFragment"
+        android:label="Configuración"
+        tools:layout="@layout/fragment_configuracion" />
+    <fragment
+        android:id="@+id/nav_acerca"
+        android:name="es.albertqc.albertoquismondo_documenta_tfg.ui.acerca.AcercaDeFragment"
+        android:label="Acerca de..."
+        tools:layout="@layout/fragment_acerca_de" />
+    <fragment
+        android:id="@+id/nav_admin"
+        android:name="es.albertqc.albertoquismondo_documenta_tfg.ui.admin.AdminFragment"
+        android:label="Admin"
+        tools:layout="@layout/fragment_admin" />
+</navigation>
