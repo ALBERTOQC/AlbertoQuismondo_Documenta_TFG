@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "434500482189",
+    "firebase_url": "https://documenta-5e354-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "documenta-5e354",
+    "storage_bucket": "documenta-5e354.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434500482189:android:e087592e0fd0498c41dec4",
+        "android_client_info": {
+          "package_name": "es.albertqc.albertoquismondo_documenta_tfg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPjogCG4J0vyKT3O89hNxRM7JubJ7CP84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

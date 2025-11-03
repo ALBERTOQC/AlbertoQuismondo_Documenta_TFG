@@ -50,6 +50,23 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+                navigationView.setNavigationItemSelectedListener(item -> {
+                    int id = item.getItemId();
+
+                    if (id == R.id.nav_inicio) {
+                        // Si estamos o no en Inicio, volvemos a cargarlo
+                        navController.popBackStack(R.id.nav_inicio, false);
+                        navController.navigate(R.id.nav_inicio);
+                    } else {
+                        navController.navigate(id);
+                    }
+
+                    // se cierra el menú lateral tras pulsar
+                    drawer.closeDrawers();
+                    return true;
+                });
+
     }
 
     @Override

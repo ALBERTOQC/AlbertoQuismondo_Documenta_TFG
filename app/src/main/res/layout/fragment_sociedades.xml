@@ -5,27 +5,154 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.sociedades.SociedadesFragment">
-    <TextView
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Fragment Sociedades"
-        android:textSize="20sp"/>
-
-
-
-
-    <TextView
-        android:id="@+id/text_slideshow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F5F7FA"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="250dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/sociedades" />
+
+
+            <EditText
+                android:id="@+id/etCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#1565C0"
+                android:ems="10"
+                android:hint="Correo electrónico"
+                android:inputType="textEmailAddress"
+                android:padding="12dp"
+                android:textColor="#000000"
+                android:textColorHint="#9E9E9E" />
+
+
+            <EditText
+                android:id="@+id/etContrasenia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#1565C0"
+                android:ems="10"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:textColor="#000000"
+                android:textColorHint="#9E9E9E" />
+
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Introduce tu correo y contraseña para acceder. Si aún no formas parte de Documenta, completa los campos y pulsa en 'Registrarse'."
+                android:textAlignment="center"
+                android:textColor="#424242"
+                android:textSize="14sp"
+                android:lineSpacingExtra="2dp" />
+
+            <EditText
+                android:id="@+id/etNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="#1565C0"
+                android:ems="10"
+                android:hint="Nombre completo"
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                android:textColor="#000000"
+                android:textColorHint="#9E9E9E" />
+
+
+            <RadioGroup
+                android:id="@+id/rgRoles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rbAutonomo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Autónomo"
+                    android:textColor="#1565C0" />
+
+                <RadioButton
+                    android:id="@+id/rbSociedad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sociedad"
+                    android:textColor="#1565C0" />
+
+                <RadioButton
+                    android:id="@+id/rbAdmin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Administrador"
+                    android:textColor="#1565C0" />
+            </RadioGroup>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#1565C0"
+                    android:text="Acceder"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnRegistrarse"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#78909C"
+                    android:text="Registrarse"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

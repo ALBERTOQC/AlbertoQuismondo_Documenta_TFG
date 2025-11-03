@@ -13,6 +13,12 @@
         android:theme="@style/Theme.AlbertoQuismondo_Documenta_TFG"
         tools:targetApi="31">
         <activity
+            android:name=".SociedadMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AutonomoMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
