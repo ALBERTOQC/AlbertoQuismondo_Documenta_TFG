@@ -1,7 +1,12 @@
 package es.albertqc.albertoquismondo_documenta_tfg;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,14 +23,13 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SociedadMainActivity extends AppCompatActivity {
+public class SociedadMainActivity extends AppCompatActivity implements DialogoDocumentosSociedades.OnCerrarDialogo  {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private TextView tvBienvenida;
-    private RecyclerView recyclerUsuarios;
-    private UsuariosAdapter adapter;
-    private List<Usuario> listaUsuarios;
+    private ImageButton btnVerUsuarios;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,48 +41,55 @@ public class SociedadMainActivity extends AppCompatActivity {
             return insets;
         });
 
-
-        tvBienvenida = findViewById(R.id.tvBienvenida);
-        recyclerUsuarios = findViewById(R.id.mirecycler);
-        recyclerUsuarios.setLayoutManager(new LinearLayoutManager(this));
-
-        listaUsuarios = new ArrayList<>();
-        adapter = new UsuariosAdapter(listaUsuarios);
-        recyclerUsuarios.setAdapter(adapter);
-
+        // Inicializamos Firebase y vistas
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        tvBienvenida = findViewById(R.id.tvBienvenida);
+        btnVerUsuarios = findViewById(R.id.btnVerUsuarios);
 
-        // mostrrar nombre del usuario actual
+        // Cargar nombre del usuario actual
         String userId = mAuth.getCurrentUser().getUid();
         db.collection("usuarios").document(userId).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         String nombre = documentSnapshot.getString("nombre");
-                        tvBienvenida.setText("Bienvenido, " + nombre + " 👋");
+                        tvBienvenida.setText("Bienvenido, " + nombre + " ");
                     }
                 })
                 .addOnFailureListener(e ->
                         tvBienvenida.setText("Bienvenido, usuario (error al cargar nombre)")
                 );
 
-        // cargar todos los usuarios de Firebase
-        cargarUsuarios();
+        // Mostrar el diálogo al pulsar el botón
+        btnVerUsuarios.setOnClickListener(v -> {
+            DialogoUsuarios dialogo = new DialogoUsuarios();
+            dialogo.show(getSupportFragmentManager(), "DialogoUsuarios");
+        });
+        // Botón para abrir el diálogo informativo
+        Button btnVerInfoDocumentos = findViewById(R.id.btnVerInfoDocumentosSociedad);
+        btnVerInfoDocumentos.setOnClickListener(v -> {
+            DialogoDocumentosSociedades dialogo = new DialogoDocumentosSociedades();
+            dialogo.show(getSupportFragmentManager(), "DialogoDocumentosSociedades");
+        });
+
+        // Descargar documentos
+        ImageButton btnDescargar600 = findViewById(R.id.btnDescargar600);
+        btnDescargar600.setOnClickListener(v -> abrirWeb("https://www.agenciatributaria.es/static_files/Sede/ITP_AJD/modelo600.pdf"));
+
+        ImageButton btnDescargar036 = findViewById(R.id.btnDescargar036Sociedad);
+        btnDescargar036.setOnClickListener(v -> abrirWeb("https://www.hacienda.gob.es/SGT/NormativaDoctrina/main/main_2017/anexo%20ii%20-%20modelo%20036.pdf"));
+
+        ImageButton btnDescargarTA6 = findViewById(R.id.btnDescargarTA6);
+        btnDescargarTA6.setOnClickListener(v -> abrirWeb("https://www.seg-social.es/wps/wcm/connect/wss/3eb2f3a1-f501-46ce-928e-d1a00b5441b2/TA6.pdf"));
     }
 
-    private void cargarUsuarios() {
-        db.collection("usuarios")
-                .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    listaUsuarios.clear();
-                    for (QueryDocumentSnapshot document : querySnapshot) {
-                        Usuario usuario = document.toObject(Usuario.class);
-                        listaUsuarios.add(usuario);
-                    }
-                    adapter.notifyDataSetChanged();
-                })
-                .addOnFailureListener(e -> {
-                    tvBienvenida.setText("Error al cargar usuarios 😕");
-                });
+    private void abrirWeb(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onCerrar() {
+        Toast.makeText(this, "Cerrado", Toast.LENGTH_SHORT).show();
     }
 }

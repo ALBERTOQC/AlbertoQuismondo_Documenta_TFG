@@ -1,32 +1,31 @@
 package es.albertqc.albertoquismondo_documenta_tfg;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import android.content.Intent;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class AutonomoMainActivity extends AppCompatActivity {
+public class AutonomoMainActivity extends AppCompatActivity implements DialogoDocumentosAutonomos.OnCerrarDialogo{
+
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private TextView tvBienvenida;
-    private RecyclerView recyclerView;
-    private UsuariosAdapter adapter;
-    private List<Usuario> listaUsuarios;
-
+    private ImageButton btnVerUsuarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,51 +37,68 @@ public class AutonomoMainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        // se inicializa las vistas
-        tvBienvenida = findViewById(R.id.tvBienvenida);
-        recyclerView = findViewById(R.id.mirecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // se inciia Firebase
+        // Inicializamos Firebase y vistas
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        tvBienvenida = findViewById(R.id.tvBienvenida);
+        btnVerUsuarios = findViewById(R.id.btnVerUsuarios);
 
-        // configuro el adapter
-        listaUsuarios = new ArrayList<>();
-        adapter = new UsuariosAdapter(listaUsuarios);
-        recyclerView.setAdapter(adapter);
+        // Botones de descarga de modelos
+        ImageButton btnDescargar036 = findViewById(R.id.btnDescargar036);
+        ImageButton btnDescargar037 = findViewById(R.id.btnDescargar037);
+        ImageButton btnDescargarTA0521 = findViewById(R.id.btnDescargarTA0521);
 
-        // cargo nombre dle ususairo actual
+        // Botón para ver info general de documentos
+        Button btnVerInfoDocumentos = findViewById(R.id.btnVerInfoDocumentos);
+
+        // Cargar nombre del usuario actual desde Firebase
         String userId = mAuth.getCurrentUser().getUid();
         db.collection("usuarios").document(userId).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         String nombre = documentSnapshot.getString("nombre");
-                        tvBienvenida.setText("Bienvenido, " + nombre + " 👋");
+                        tvBienvenida.setText("Bienvenido, " + nombre + " ");
                     }
                 })
                 .addOnFailureListener(e ->
                         tvBienvenida.setText("Bienvenido, usuario (error al cargar nombre)")
                 );
 
-        // cargo todos los usuarios desde FIrebase
-        cargarUsuarios();
+        // Mostrar el diálogo de usuarios
+        btnVerUsuarios.setOnClickListener(v -> {
+            DialogoUsuarios dialogo = new DialogoUsuarios();
+            dialogo.show(getSupportFragmentManager(), "DialogoUsuarios");
+        });
+
+        // Mostrar el diálogo informativo sobre los documentos
+        btnVerInfoDocumentos.setOnClickListener(v -> {
+            DialogoDocumentosAutonomos dialogo = new DialogoDocumentosAutonomos();
+            dialogo.show(getSupportFragmentManager(), "DialogoDocumentos");
+        });
+
+        // Abrir URL del Modelo 036 en navegador
+        btnDescargar036.setOnClickListener(v -> {
+            String url036 = "https://www.hacienda.gob.es/SGT/NormativaDoctrina/main/main_2017/anexo%20ii%20-%20modelo%20036.pdf";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url036));
+            startActivity(intent);
+        });
+
+        //  Abrir URL del Modelo 037 en navegador
+        btnDescargar037.setOnClickListener(v -> {
+            String url037 = "https://www.hacienda.gob.es/SGT/NormativaDoctrina/main/main_2017/anexo%20iii%20-%20modelo%20037.pdf";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url037));
+            startActivity(intent);
+        });
+
+        btnDescargarTA0521.setOnClickListener(v -> {
+            String urlTA0521 = "https://www.fremap.es/SiteCollectionDocuments/Formularios/cobertura_contingencias_prof_y_cese_actividad.pdf";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlTA0521));
+            startActivity(intent);
+        });
     }
 
-    private void cargarUsuarios() {
-        db.collection("usuarios")
-                .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    listaUsuarios.clear();
-                    for (QueryDocumentSnapshot document : querySnapshot) {
-                        Usuario usuario = document.toObject(Usuario.class);
-                        listaUsuarios.add(usuario);
-                    }
-                    adapter.notifyDataSetChanged();
-                })
-                .addOnFailureListener(e ->
-                        tvBienvenida.setText("Error al cargar usuarios 😕")
-                );
+    @Override
+    public void onCerrar() {
+        Toast.makeText(this, "Diálogo cerrado", Toast.LENGTH_SHORT).show();
     }
 }
