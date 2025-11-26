@@ -1,66 +1,166 @@
 package es.albertqc.albertoquismondo_documenta_tfg.ui.documentacion;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 
 import es.albertqc.albertoquismondo_documenta_tfg.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DocumentacionFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DocumentacionFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private Spinner spinnerCCAA;
+    private Button btnEstatuto, btnVerConvenio;
+    private Button btnUGT, btnCCOO, btnUSO;
+    private Button btnGuiaDerechos, btnSimuladores, btnContactos;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FirebaseFirestore db;
+
+    // Mapa dinámico de convenios
+    private final HashMap<String, String> conveniosMap = new HashMap<>();
+    private final HashMap<String, String> otrosDocumentosMap = new HashMap<>();
 
     public DocumentacionFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DocumentacionFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DocumentacionFragment newInstance(String param1, String param2) {
-        DocumentacionFragment fragment = new DocumentacionFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        // Constructor vacío obligatorio
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_documentacion, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_documentacion, container, false);
+
+        db = FirebaseFirestore.getInstance();
+
+        // --- Referencias a vistas ---
+        spinnerCCAA = view.findViewById(R.id.spinnerCCAA);
+        btnEstatuto = view.findViewById(R.id.btnEstatuto);
+        btnVerConvenio = view.findViewById(R.id.btnVerConvenio);
+        btnUGT = view.findViewById(R.id.btnUGT);
+        btnCCOO = view.findViewById(R.id.btnCCOO);
+        btnUSO = view.findViewById(R.id.btnUSO);
+        btnGuiaDerechos = view.findViewById(R.id.btnGuiaDerechos);
+        btnSimuladores = view.findViewById(R.id.btnSimuladores);
+        btnContactos = view.findViewById(R.id.btnContactos);
+
+        cargarDocumentosFirestore();
+
+        // --- Botón Estatuto de los Trabajadores ---
+        btnEstatuto.setOnClickListener(v -> abrirUrl(
+                otrosDocumentosMap.getOrDefault("Estatuto de los Trabajadores",
+                        "https://www.boe.es/biblioteca_juridica/abrir_pdf.php?id=PUB-DT-2025-139")));
+
+        // --- Botón Ver Convenio según CCAA seleccionada ---
+        btnVerConvenio.setOnClickListener(v -> {
+            String comunidad = spinnerCCAA.getSelectedItem().toString();
+            String url = conveniosMap.get(comunidad);
+
+            if (url != null) {
+                abrirUrl(url);
+            } else {
+                Toast.makeText(getContext(), "No hay convenio disponible para " + comunidad, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // --- Botones Sindicatos ---
+        btnUGT.setOnClickListener(v -> abrirUrl(otrosDocumentosMap.getOrDefault("UGT", "https://www.ugt.es/")));
+        btnCCOO.setOnClickListener(v -> abrirUrl(otrosDocumentosMap.getOrDefault("CCOO", "https://www.ccoo.es/")));
+        btnUSO.setOnClickListener(v -> abrirUrl(otrosDocumentosMap.getOrDefault("USO", "https://www.uso.es/")));
+
+        // --- Botón Guía de Derechos ---
+        btnGuiaDerechos.setOnClickListener(v -> abrirUrl(
+                otrosDocumentosMap.getOrDefault("Guía de Derechos",
+                        "https://antoniosilva.es/derechos-laborales-en-espana-guia-completa-para-trabajadores/")));
+
+        // --- Botón Simuladores ---
+        btnSimuladores.setOnClickListener(v -> abrirUrl(
+                otrosDocumentosMap.getOrDefault("Simuladores Laborales",
+                        "https://www.asinom.com/documentacion/caracteristicas_asinom.pdf")));
+
+        // --- Botón Contactos Útiles ---
+        btnContactos.setOnClickListener(v -> abrirUrl(
+                otrosDocumentosMap.getOrDefault("Contactos Útiles",
+                        "https://www.mites.gob.es/es/informacion/infgral/directorio/index.htm")));
+
+        return view;
+    }
+
+    /**
+     * Carga los convenios y documentos desde Firestore y los guarda en mapas dinámicos.
+     */
+    private void cargarDocumentosFirestore() {
+        db.collection("documentos").document("documentos").get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Cargar convenios por CCAA
+                        String[] comunidades = {"Andalucía","Cataluña","Madrid","Valencia","Galicia",
+                                "País Vasco","Aragón","Castilla y León","Murcia","Extremadura","Castilla-La Mancha"};
+                        for (String ccaa : comunidades) {
+                            if (documentSnapshot.contains("convenio" + ccaa.replace(" ", ""))) {
+                                conveniosMap.put(ccaa, documentSnapshot.getString("convenio" + ccaa.replace(" ", "")));
+                            }
+                        }
+
+                        // Cargar otros documentos
+                        String[] otrosKeys = {"Estatuto", "Guía de Derechos", "Simuladores", "Contactos", "UGT", "CCOO", "USO"};
+                        for (String key : otrosKeys) {
+                            if (documentSnapshot.contains(key)) {
+                                otrosDocumentosMap.put(key.equals("Estatuto") ? "Estatuto de los Trabajadores" : key,
+                                        documentSnapshot.getString(key));
+                            }
+                        }
+                    } else {
+                        // Si falla Firestore, se usan URLs por defecto
+                        inicializarConveniosPorDefecto();
+                    }
+                })
+                .addOnFailureListener(e -> inicializarConveniosPorDefecto());
+    }
+
+    private void inicializarConveniosPorDefecto() {
+        // Convenios por defecto
+        conveniosMap.put("Andalucía", "https://www.ccoo-servicios.es/andalucia/conveniosandalucia/pag1/");
+        conveniosMap.put("Cataluña","https://es.ccoo.cat/convenis/");
+        conveniosMap.put("Madrid","https://www.comunidad.madrid/servicios/empleo/convenios-colectivos");
+        conveniosMap.put("Valencia","https://valencia.cnt.es/convenios-laborales/");
+        conveniosMap.put("Castilla-La Mancha","https://www.castillalamancha.es/gobierno/haciendayaapp/estructura/dgpfp/actuaciones/viii-convenio-colectivo");
+        conveniosMap.put("Galicia", "https://convenios.xunta.gal/consultaconvenios/busqueda-convenio/buscar");
+        conveniosMap.put("País Vasco", "https://www.euskadi.eus/gobierno-vasco/-/convenios-colectivos");
+        conveniosMap.put("Aragón", "https://www.aragon.es/documents/d/guest/listaweb-de-sector");
+        conveniosMap.put("Castilla y León", "https://www.ccoo-servicios.es/castillayleon/convenios/pag76/");
+        conveniosMap.put("Murcia", "https://www.carm.es/web/pagina?IDCONTENIDO=246&IDTIPO=200");
+        conveniosMap.put("Extremadura", "https://www.ugtextremadura.org/convenios-colectivos-extremadura-servicios-publicos");
+
+        // Otros documentos por defecto
+        otrosDocumentosMap.put("Estatuto de los Trabajadores","https://www.boe.es/biblioteca_juridica/abrir_pdf.php?id=PUB-DT-2025-139");
+        otrosDocumentosMap.put("Guía de Derechos","https://antoniosilva.es/derechos-laborales-en-espana-guia-completa-para-trabajadores/");
+        otrosDocumentosMap.put("Simuladores Laborales","https://www.asinom.com/documentacion/caracteristicas_asinom.pdf");
+        otrosDocumentosMap.put("Contactos Útiles","https://www.mites.gob.es/es/informacion/infgral/directorio/index.htm");
+        otrosDocumentosMap.put("UGT","https://www.ugt.es/");
+        otrosDocumentosMap.put("CCOO","https://www.ccoo.es/");
+        otrosDocumentosMap.put("USO","https://www.uso.es/");
+    }
+
+    /**
+     * Abre una URL externa con un Intent seguro.
+     */
+    private void abrirUrl(String url) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "No se pudo abrir el enlace.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

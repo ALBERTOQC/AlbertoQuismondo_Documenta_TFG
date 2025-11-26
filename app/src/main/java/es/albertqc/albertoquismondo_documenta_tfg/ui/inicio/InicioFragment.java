@@ -19,33 +19,21 @@ public class InicioFragment extends Fragment {
 
     private FragmentInicioBinding binding;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        InicioViewModel homeViewModel =
-                new ViewModelProvider(this).get(InicioViewModel.class);
 
         binding = FragmentInicioBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        ImageButton botonEnlaceAutonomos = binding.ibAutonomo;
-        ImageButton botonEnlaceSociedades = binding.ibSociedad;
-        ImageButton botonEnlaceAdmin = binding.ibAdmin;
+        binding.ibAutonomo.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.nav_autonomos));
 
+        binding.ibSociedad.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.nav_sociedades));
 
-        // Navegar a AutonomosFragment
-        botonEnlaceAutonomos.setOnClickListener(v ->
-                Navigation.findNavController(v)
-                        .navigate(R.id.nav_autonomos));
-
-        // Navegar a SociedadesFragment
-        botonEnlaceSociedades.setOnClickListener(v ->
-                Navigation.findNavController(v)
-                        .navigate(R.id.nav_sociedades));
-
-        // Navegar a AdminFragment
-        botonEnlaceAdmin.setOnClickListener(v ->
-                Navigation.findNavController(v)
-                        .navigate(R.id.nav_admin));
+        binding.ibDocumentacion.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.nav_documentacion));
 
         return root;
     }
@@ -56,3 +44,4 @@ public class InicioFragment extends Fragment {
         binding = null;
     }
 }
+

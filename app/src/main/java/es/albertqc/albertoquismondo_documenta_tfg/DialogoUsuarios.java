@@ -63,7 +63,7 @@ public class DialogoUsuarios extends DialogFragment {
                     adapter.notifyDataSetChanged();
                 })
                 .addOnFailureListener(e -> {
-                    // si falla, pendiente mostrar un Toast
+
                 });
     }
 }

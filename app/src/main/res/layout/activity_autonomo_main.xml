@@ -1,181 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5F5"
     tools:context=".AutonomoMainActivity">
 
-    <TextView
-        android:id="@+id/tvBienvenida"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MIEMBROS DE LA COMUNIDAD"
-        android:textColor="#222"
-        android:textSize="22sp"
-        android:textStyle="bold"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/tvDescripcion"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Conoce a los miembros de la comunidad Documenta."
-        android:textColor="#555"
-        android:textSize="16sp"
-        android:textAlignment="center"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tvBienvenida"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageButton
-        android:id="@+id/btnVerUsuarios"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="12dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="Ver usuarios"
-        android:src="@drawable/social"
-        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDescripcion" />
-
-    <TextView
-        android:id="@+id/tvDocumentosTitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DOCUMENTOS NECESARIOS"
-        android:textColor="#000"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/btnVerUsuarios"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/btnVerInfoDocumentos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ver información"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tvDocumentosTitulo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/tvHacienda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="📄 Hacienda"
-        android:textStyle="bold"
-        android:textSize="17sp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/btnVerInfoDocumentos"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/layoutHacienda"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/tvHacienda"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:padding="16dp"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="8dp">
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <!-- CABECERA y Usuarios -->
+            <TextView
+                android:id="@+id/tvBienvenida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="MIEMBROS DE LA COMUNIDAD"
+                android:textColor="#222"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:layout_marginBottom="8dp" />
 
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/tvDescripcion"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Modelo 036"
-                android:textSize="16sp" />
+                android:text="Conoce a los miembros de la comunidad Documenta."
+                android:textColor="#555"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:layout_marginBottom="12dp" />
 
             <ImageButton
-                android:id="@+id/btnDescargar036"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:id="@+id/btnVerUsuarios"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:background="@android:color/transparent"
-                android:src="@android:drawable/ic_menu_save"
-                android:contentDescription="Descargar Modelo 036" />
-        </LinearLayout>
+                android:src="@drawable/social"
+                android:scaleType="fitCenter"
+                android:contentDescription="Ver usuarios"
+                android:layout_marginBottom="16dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="4dp">
-
-            <TextView
-                android:layout_width="0dp"
+            <!-- Información Documentos -->
+            <Button
+                android:id="@+id/btnVerInfoDocumentos"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Modelo 037"
-                android:textSize="16sp" />
+                android:text="ℹ️ Información sobre documentos"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#1565C0"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
 
-            <ImageButton
-                android:id="@+id/btnDescargar037"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@android:color/transparent"
-                android:src="@android:drawable/ic_menu_save"
-                android:contentDescription="Descargar Modelo 037" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvSeguridadSocial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="🏦 Seguridad Social"
-        android:textStyle="bold"
-        android:textSize="17sp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/layoutHacienda"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/layoutSeguridadSocial"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/tvSeguridadSocial"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="8dp">
-
-            <TextView
-                android:layout_width="0dp"
+            <!-- BLOQUE DOCUMENTOS DESPLEGABLE (igual que antes) -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Modelo TA0521 (Alta/Baja RETA)"
-                android:textSize="16sp" />
+                android:orientation="vertical"
+                android:background="@drawable/borde_suave"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp">
 
-            <ImageButton
-                android:id="@+id/btnDescargarTA0521"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@android:color/transparent"
-                android:src="@android:drawable/ic_menu_save"
-                android:contentDescription="Descargar Modelo TA0521" />
+                <LinearLayout
+                    android:id="@+id/headerDocumentos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:paddingVertical="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="📂 Documentos descargables para autónomos"
+                        android:textColor="#1565C0"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/iconExpandir"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/arrow_down_float"
+                        android:contentDescription="Expandir lista" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutDocumentos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_marginTop="8dp"
+                    android:divider="?android:attr/dividerVertical"
+                    android:showDividers="middle">
+
+                    <include layout="@layout/item_autonomo_documento" android:id="@+id/itemModelo036" />
+                    <include layout="@layout/item_autonomo_documento" android:id="@+id/itemModelo037" />
+                    <include layout="@layout/item_autonomo_documento" android:id="@+id/itemModeloTA0521" />
+                    <include layout="@layout/item_autonomo_documento" android:id="@+id/itemContrato" />
+                    <include layout="@layout/item_autonomo_documento" android:id="@+id/itemBaja" />
+                    <include layout="@layout/item_autonomo_documento" android:id="@+id/itemVacaciones" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- AGENDA -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/borde_suave"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📅 Agenda del autónomo"
+                    android:textColor="#1565C0"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="8dp" />
+
+                <Button
+                    android:id="@+id/btnAbrirAgenda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Abrir agenda personal"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#1565C0"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- NUEVO: BLOQUE GASTOS E INGRESOS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/borde_suave"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="💰 Control de ingresos y gastos"
+                    android:textColor="#1565C0"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="8dp" />
+
+                <Button
+                    android:id="@+id/btnAbrirGastosIngresos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Abrir registro"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#1565C0"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Encabezado Generar factura -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="🧾 Generar factura"
+                    android:textColor="#00796B"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- Botón Generar PDF -->
+                <Button
+                    android:id="@+id/btnGenerarFactura"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Generar PDF"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#00796B"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnCerrar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:layout_gravity="end"
+                    android:backgroundTint="#B71C1C"
+                    android:text="Cerrar"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

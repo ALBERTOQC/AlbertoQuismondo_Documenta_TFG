@@ -34,21 +34,27 @@ public class DialogoDocumentosSociedades extends DialogFragment {
                 "   - Qué incluye: identidad de socios, aportaciones (capital social), estatutos, nombramiento de administradores y certificación negativa del nombre.\n" +
                 "   - Observación práctica: tras la firma, la notaría suele tramitar el NIF provisional y los documentos para su inscripción en el Registro Mercantil.\n\n" +
 
-                "4) Liquidación del Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados (Modelo 600)\n" +
+                "4) Tipos de sociedades\n" +
+                "   - Sociedad Limitada (SL): capital mínimo 3.000€, responsabilidad limitada al capital aportado, adecuada para PYMEs.\n" +
+                "   - Sociedad Limitada Unipersonal (SLU): similar a SL, pero con un único socio.\n" +
+                "   - Sociedad Anónima (SA): capital mínimo 60.000€, responsabilidad limitada, ideal para empresas grandes o que quieran cotizar en bolsa.\n" +
+                "   - Sociedad Civil (SC) y otras: responsabilidad ilimitada de los socios, más flexible pero con mayor riesgo personal.\n\n" +
+
+                "5) Liquidación del Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados (Modelo 600)\n" +
                 "   - Qué es: autoliquidación que, según el tipo de constitución y la normativa autonómica, puede ser exigible; en muchos casos existe exención pero debe acreditarse.\n" +
                 "   - Para qué sirve: justifica ante la Hacienda autonómica el cumplimiento o la exención del impuesto derivado de la escritura pública.\n" +
                 "   - Recomendación: consulta en la oficina de la Hacienda autonómica o con una gestoría, porque el trámite y la documentación requerida varían por comunidad.\n\n" +
 
-                "5) Inscripción en el Registro Mercantil Provincial\n" +
+                "6) Inscripción en el Registro Mercantil Provincial\n" +
                 "   - Qué es: una vez elevada la escritura pública, hay que inscribir la sociedad en el Registro Mercantil provincial correspondiente al domicilio social.\n" +
                 "   - Para qué sirve: otorga personalidad jurídica a la sociedad y permite operar oficialmente (contratos, cuentas bancarias a nombre de la sociedad, etc.).\n\n" +
 
-                "6) Alta en la Agencia Tributaria (Modelo 036)\n" +
+                "7) Alta en la Agencia Tributaria (Modelo 036)\n" +
                 "   - Qué es: declaración censal para darse de alta ante Hacienda, solicitar el NIF definitivo y comunicar la actividad económica.\n" +
                 "   - Para qué sirve: permite cumplir obligaciones fiscales (IVA, retenciones, obligaciones informativas).\n" +
                 "   - Observaciones: el NIF provisional suele gestionarse en el proceso de constitución; el Modelo 036 formaliza y comunica datos fiscales ante la Agencia Tributaria.\n\n" +
 
-                "7) Inscripción en la Seguridad Social (si procede)\n" +
+                "8) Inscripción en la Seguridad Social (si procede)\n" +
                 "   - Qué es: si la sociedad va a tener empleados, la empresa debe registrarse como empresario y solicitar un código de cuenta de cotización (modelos tipo TA.6 / TA.7 según caso).\n" +
                 "   - Para qué sirve: es obligatorio para dar de alta a los trabajadores y cumplir con las obligaciones de cotización.\n\n" +
 
@@ -74,7 +80,6 @@ public class DialogoDocumentosSociedades extends DialogFragment {
                 "- Justificantes: conserva durante al menos 4 años todos los justificantes, escrituras y acreditaciones de presentación.\n" +
                 "- Asesoramiento: para sociedades es muy recomendable trabajar con una gestoría o asesoría (notarial, fiscal y laboral) para evitar errores formales que retrasen la inscripción.\n" +
                 "- Costes: ten en cuenta costes notariales, registrales y, en su caso, el coste de la gestoría; el capital mínimo para una Sociedad Limitada (SL) suele ser un requisito a aportar en el momento de constitución.\n\n";
-
 
         builder.setMessage(mensaje);
         builder.setPositiveButton("Cerrar", (dialog, id) -> listener.onCerrar());

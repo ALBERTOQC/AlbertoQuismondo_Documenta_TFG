@@ -21,14 +21,6 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Documentación" />
         <item
-            android:id="@+id/nav_requisitos"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Requisitos legales"/>
-        <item
-            android:id="@+id/nav_configuracion"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Configuración" />
-        <item
             android:id="@+id/nav_acerca"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Acerca de..."/>

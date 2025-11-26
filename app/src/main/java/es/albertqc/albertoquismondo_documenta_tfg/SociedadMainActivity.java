@@ -3,8 +3,11 @@ package es.albertqc.albertoquismondo_documenta_tfg;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,79 +16,172 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
-public class SociedadMainActivity extends AppCompatActivity implements DialogoDocumentosSociedades.OnCerrarDialogo  {
+public class SociedadMainActivity extends AppCompatActivity implements DialogoDocumentosSociedades.OnCerrarDialogo {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private TextView tvBienvenida;
     private ImageButton btnVerUsuarios;
+    private Button btnVerAgenda;
+    private LinearLayout layoutDocumentos;
+    private ImageView iconExpandir;
+    private boolean documentosVisible = false;
+
+    private final HashMap<String, String> documentosMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sociedad_main);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Inicializamos Firebase y vistas
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
         tvBienvenida = findViewById(R.id.tvBienvenida);
         btnVerUsuarios = findViewById(R.id.btnVerUsuarios);
+        btnVerAgenda = findViewById(R.id.btnVerAgendaSociedad);
+        layoutDocumentos = findViewById(R.id.layoutDocumentos);
+        iconExpandir = findViewById(R.id.iconExpandir);
 
-        // Cargar nombre del usuario actual
+        cargarNombreUsuario();
+        configurarVerUsuarios();
+        configurarAgenda();
+        configurarGastosIngresos();
+        configurarGenerarFactura();
+        configurarExpansorDocumentos();
+        cargarDocumentosFirestore();
+
+        Button btnInfoDocumentos = findViewById(R.id.btnVerInfoDocumentosSociedad);
+        btnInfoDocumentos.setOnClickListener(v -> {
+            DialogoDocumentosSociedades dialog = new DialogoDocumentosSociedades();
+            dialog.show(getSupportFragmentManager(), "DialogoDocumentosSociedades");
+        });
+
+        findViewById(R.id.btnCerrar).setOnClickListener(v -> {
+            Intent intent = new Intent(SociedadMainActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    private void cargarNombreUsuario() {
         String userId = mAuth.getCurrentUser().getUid();
         db.collection("usuarios").document(userId).get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String nombre = documentSnapshot.getString("nombre");
-                        tvBienvenida.setText("Bienvenido, " + nombre + " ");
+                .addOnSuccessListener(docSnapshot -> {
+                    if (docSnapshot.exists()) {
+                        String nombre = docSnapshot.getString("nombre");
+                        tvBienvenida.setText("Bienvenido, " + nombre);
                     }
                 })
-                .addOnFailureListener(e ->
-                        tvBienvenida.setText("Bienvenido, usuario (error al cargar nombre)")
-                );
+                .addOnFailureListener(e -> tvBienvenida.setText("Bienvenido, usuario"));
+    }
 
-        // Mostrar el diálogo al pulsar el botón
+    private void configurarVerUsuarios() {
         btnVerUsuarios.setOnClickListener(v -> {
             DialogoUsuarios dialogo = new DialogoUsuarios();
             dialogo.show(getSupportFragmentManager(), "DialogoUsuarios");
         });
-        // Botón para abrir el diálogo informativo
-        Button btnVerInfoDocumentos = findViewById(R.id.btnVerInfoDocumentosSociedad);
-        btnVerInfoDocumentos.setOnClickListener(v -> {
-            DialogoDocumentosSociedades dialogo = new DialogoDocumentosSociedades();
-            dialogo.show(getSupportFragmentManager(), "DialogoDocumentosSociedades");
+    }
+
+    private void configurarAgenda() {
+        btnVerAgenda.setOnClickListener(v -> {
+            AgendaSociedadDialog dialogo = new AgendaSociedadDialog();
+            dialogo.show(getSupportFragmentManager(), "AgendaSociedadDialog");
         });
+    }
 
-        // Descargar documentos
-        ImageButton btnDescargar600 = findViewById(R.id.btnDescargar600);
-        btnDescargar600.setOnClickListener(v -> abrirWeb("https://www.agenciatributaria.es/static_files/Sede/ITP_AJD/modelo600.pdf"));
+    private void configurarGastosIngresos() {
+        findViewById(R.id.btnAbrirGastosIngresosSociedad).setOnClickListener(v -> {
+            DialogoGastosIngresosSociedades dialog = new DialogoGastosIngresosSociedades();
+            dialog.show(getSupportFragmentManager(), "DialogoGastosIngresosSociedades");
+        });
+    }
 
-        ImageButton btnDescargar036 = findViewById(R.id.btnDescargar036Sociedad);
-        btnDescargar036.setOnClickListener(v -> abrirWeb("https://www.hacienda.gob.es/SGT/NormativaDoctrina/main/main_2017/anexo%20ii%20-%20modelo%20036.pdf"));
+    private void configurarGenerarFactura() {
+        findViewById(R.id.btnGenerarFacturaSociedad).setOnClickListener(v -> {
+            DialogoGenerarFacturaSociedades dialog = new DialogoGenerarFacturaSociedades();
+            dialog.show(getSupportFragmentManager(), "DialogoGenerarFacturaSociedades");
+        });
+    }
 
-        ImageButton btnDescargarTA6 = findViewById(R.id.btnDescargarTA6);
-        btnDescargarTA6.setOnClickListener(v -> abrirWeb("https://www.seg-social.es/wps/wcm/connect/wss/3eb2f3a1-f501-46ce-928e-d1a00b5441b2/TA6.pdf"));
+    private void configurarExpansorDocumentos() {
+        LinearLayout headerDocumentos = findViewById(R.id.headerDocumentos);
+        headerDocumentos.setOnClickListener(v -> {
+            documentosVisible = !documentosVisible;
+            layoutDocumentos.setVisibility(documentosVisible ? View.VISIBLE : View.GONE);
+            iconExpandir.setImageResource(documentosVisible ? android.R.drawable.arrow_up_float : android.R.drawable.arrow_down_float);
+        });
+    }
+
+    private void cargarDocumentosFirestore() {
+        db.collection("documentos").document("estatuto").get()
+                .addOnSuccessListener(docSnapshot -> {
+                    if (docSnapshot.exists()) {
+                        String[] keys = {"itemModelo600", "itemModelo036", "itemModeloTA6", "itemContrato", "itemBaja", "itemVacaciones"};
+                        for (String key : keys) {
+                            String url = docSnapshot.contains(key) ? docSnapshot.getString(key) : "";
+                            documentosMap.put(key, url != null ? url : "");
+                        }
+                    }
+                    configurarClicksDocumentos();
+                })
+                .addOnFailureListener(e -> {
+                    documentosMap.put("itemModelo600", "https://sede.agenciatributaria.gob.es/static_files/Sede/Procedimiento_ayuda/GC12/600/mod600e.pdf");
+                    documentosMap.put("itemModelo036", "https://www.hacienda.gob.es/.../modelo036.pdf");
+                    documentosMap.put("itemModeloTA6", "https://www.seg-social.es/.../TA-6.pdf");
+                    documentosMap.put("itemContrato", "https://www.inmujeres.gob.es/.../contrato.pdf");
+                    documentosMap.put("itemBaja", "https://eal.economistas.es/.../baja.pdf");
+                    documentosMap.put("itemVacaciones", "https://www.sesametime.com/.../vacaciones.pdf");
+                    configurarClicksDocumentos();
+                });
+    }
+
+    private void configurarClicksDocumentos() {
+        setClickDocumento(R.id.itemModelo600, documentosMap.get("itemModelo600"), "Modelo 600");
+        setClickDocumento(R.id.itemModelo036, documentosMap.get("itemModelo036"), "Modelo 036");
+        setClickDocumento(R.id.itemModeloTA6, documentosMap.get("itemModeloTA6"), "TA6");
+        setClickDocumento(R.id.itemContrato, documentosMap.get("itemContrato"), "Contrato");
+        setClickDocumento(R.id.itemBaja, documentosMap.get("itemBaja"), "Baja Voluntaria");
+        setClickDocumento(R.id.itemVacaciones, documentosMap.get("itemVacaciones"), "Solicitud de Vacaciones");
+    }
+
+    private void setClickDocumento(int idLayout, String url, String nombre) {
+        View layout = findViewById(idLayout);
+        if (layout != null) {
+            TextView tvNombre = layout.findViewById(R.id.tvNombreDocumento);
+            if (tvNombre != null) tvNombre.setText(nombre);
+
+            layout.setOnClickListener(v -> {
+                if (url != null && !url.isEmpty()) {
+                    abrirWeb(url);
+                } else {
+                    Toast.makeText(this, "URL no disponible", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void abrirWeb(String url) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, "No se pudo abrir el enlace.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -93,3 +189,4 @@ public class SociedadMainActivity extends AppCompatActivity implements DialogoDo
         Toast.makeText(this, "Cerrado", Toast.LENGTH_SHORT).show();
     }
 }
+

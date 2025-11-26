@@ -1,5 +1,6 @@
 package es.albertqc.albertoquismondo_documenta_tfg;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -28,57 +29,58 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // --- CONFIGURACIÓN DEL TOOLBAR
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
-            }
-        });
+
+        // Colores corporativos
+        binding.appBarMain.toolbar.setBackgroundColor(Color.parseColor("#1E3A5F"));
+        binding.appBarMain.toolbar.setTitleTextColor(Color.WHITE);
+        binding.appBarMain.toolbar.setTitle("Documenta");
+
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
+        // Destinos principales
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_inicio, R.id.nav_autonomos, R.id.nav_sociedades,
                 R.id.nav_documentacion, R.id.nav_requisitos, R.id.nav_configuracion,
                 R.id.nav_acerca, R.id.nav_admin)
                 .setOpenableLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+
+        NavController navController =
+                Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-                navigationView.setNavigationItemSelectedListener(item -> {
-                    int id = item.getItemId();
+        // Lógica del menú lateral
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
 
-                    if (id == R.id.nav_inicio) {
-                        // Si estamos o no en Inicio, volvemos a cargarlo
-                        navController.popBackStack(R.id.nav_inicio, false);
-                        navController.navigate(R.id.nav_inicio);
-                    } else {
-                        navController.navigate(id);
-                    }
+            if (id == R.id.nav_inicio) {
+                navController.popBackStack(R.id.nav_inicio, false);
+                navController.navigate(R.id.nav_inicio);
+            } else {
+                navController.navigate(id);
+            }
 
-                    // se cierra el menú lateral tras pulsar
-                    drawer.closeDrawers();
-                    return true;
-                });
-
+            drawer.closeDrawers();
+            return true;
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavController navController =
+                Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }

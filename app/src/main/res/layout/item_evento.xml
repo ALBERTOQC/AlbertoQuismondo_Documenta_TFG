@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="?android:attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/tvEventoFecha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="01/01/2025 12:00"
+        android:textStyle="bold"
+        android:textColor="#1565C0"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvEventoDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descripción del evento"
+        android:textColor="#333"
+        android:textSize="14sp"
+        android:layout_marginTop="2dp" />
+
+</LinearLayout>

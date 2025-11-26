@@ -1,158 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.autonomos.AutonomosFragment">
+    android:background="#FAFAFA">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <!-- ===================== -->
+    <!-- VIDEO SUPERIOR        -->
+    <!-- ===================== -->
+    <VideoView
+        android:id="@+id/videoAutonomos"
+        android:layout_width="0dp"
+        android:layout_height="240dp"
+        android:keepScreenOn="true"
+        android:adjustViewBounds="true"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#F5F7FA"
-        android:orientation="vertical"
+        android:id="@+id/bloque1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="16dp"
-        android:gravity="center_horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/videoAutonomos"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Imagen superior centrada y visible -->
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="250dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/autonomos" />
+            android:id="@+id/imgAutonomos"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/autonomos"
+            android:scaleType="centerInside"
+            android:contentDescription="Autónomos"/>
 
-        <!-- Campo de correo -->
-        <EditText
-            android:id="@+id/etCorreo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#1565C0"
-            android:ems="10"
-            android:hint="Correo electrónico"
-            android:inputType="textEmailAddress"
-            android:padding="12dp"
-            android:textColor="#000000"
-            android:textColorHint="#9E9E9E" />
-
-        <!-- Campo de contraseña -->
-        <EditText
-            android:id="@+id/etContrasenia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#1565C0"
-            android:ems="10"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:padding="12dp"
-            android:textColor="#000000"
-            android:textColorHint="#9E9E9E" />
-
-        <!-- Texto explicativo -->
         <TextView
-            android:id="@+id/textView9"
-            android:layout_width="match_parent"
+            android:id="@+id/tvTextoBloque1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="Introduce tu correo y contraseña para acceder. Si aún no formas parte de Documenta, completa los campos y pulsa en 'Registrarse'."
-            android:textAlignment="center"
+            android:layout_weight="1"
+            android:text="Ser autónomo nunca fue tan fácil.\nAccede a tu panel personal con modelos oficiales, agenda, facturación y herramientas exclusivas."
             android:textColor="#424242"
-            android:textSize="14sp"
-            android:lineSpacingExtra="2dp" />
-
-        <!-- Campo de nombre -->
-        <EditText
-            android:id="@+id/etNombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:backgroundTint="#1565C0"
-            android:ems="10"
-            android:hint="Nombre completo"
-            android:inputType="textPersonName"
-            android:padding="12dp"
-            android:textColor="#000000"
-            android:textColorHint="#9E9E9E" />
-
-        <!-- Grupo de roles -->
-        <RadioGroup
-            android:id="@+id/rgRoles"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/rbAutonomo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Autónomo"
-                android:textColor="#1565C0" />
-
-            <RadioButton
-                android:id="@+id/rbSociedad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sociedad"
-                android:textColor="#1565C0" />
-
-            <RadioButton
-                android:id="@+id/rbAdmin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Administrador"
-                android:textColor="#1565C0" />
-        </RadioGroup>
-
-        <!-- Botones de acción -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
-                android:layout_weight="1"
-                android:backgroundTint="#1565C0"
-                android:text="Acceder"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btnRegistrarse"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_weight="1"
-                android:backgroundTint="#78909C"
-                android:text="Registrarse"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
-        </LinearLayout>
+            android:textSize="16sp"
+            android:paddingStart="12dp"/>
     </LinearLayout>
 
-    </ScrollView>
+    <LinearLayout
+        android:id="@+id/bloque2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="20dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/bloque1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="18dp">
+
+        <TextView
+            android:id="@+id/tvTextoBloque2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Gestiona tus trámites con total seguridad y ten siempre a mano toda tu información fiscal.
+Tu área personal centraliza tus documentos, recordatorios y gestiones importantes.
+"
+            android:textColor="#424242"
+            android:textSize="16sp"
+            android:paddingEnd="12dp"/>
+
+        <ImageView
+            android:id="@+id/imgExtraAutonomo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/autonomodocu"
+            android:scaleType="centerInside"
+            android:contentDescription="Autónomos Extra"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnAreaClientes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Acceder a mi área personal"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#1565C0"
+        android:paddingHorizontal="28dp"
+        android:paddingVertical="12dp"
+        app:layout_constraintTop_toBottomOf="@id/bloque2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="30dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
+

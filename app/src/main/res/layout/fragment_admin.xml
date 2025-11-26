@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.admin.AdminFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/imgAdmin"
+        android:layout_width="283dp"
+        android:layout_height="257dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="Administrador"
+        android:src="@drawable/administrador" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Fragment ADMIN"
-        android:textSize="20sp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Eres Administrador?"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/txtDescAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accede al panel de gestión de Documenta."
+        android:textSize="16sp"
+        android:layout_marginBottom="30dp" />
+
+    <Button
+        android:id="@+id/btnEntrarAdministrador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entrar al área de administrador"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:backgroundTint="#00796B"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"/>
+</LinearLayout>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- FILTROS -->
+    <TextView
+        android:id="@+id/txtTituloAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="Panel del Administrador"
+        android:textAlignment="center"
+        android:textColor="#0D47A1"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="20dp">
+
+        <Button
+            android:id="@+id/btnFiltrarAutonomos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autónomos"
+            android:backgroundTint="#757575"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnFiltrarSociedades"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sociedades"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="#757575"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnVerTodos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Todos"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="#757575"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <!-- RECYCLER -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerUsuariosAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- CREAR MIEMBRO -->
+    <Button
+        android:id="@+id/btnCrearMiembro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Crear miembro"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#0D47A1"
+        android:textColor="#FFFFFF"/>
+
+    <Button
+        android:id="@+id/btnEliminarMiembro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Eliminar miembro"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#AA0000"
+        android:textColor="#FFFFFF"/>
+    <Button
+        android:id="@+id/btnRestablecerContrasena"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Restablecer contraseña"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#388E3C"/>
+
+    <!-- BLOQUE: Actualizar enlaces de Documentación -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:layout_marginTop="20dp"
+        android:background="#E0E0E0">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Actualizar enlaces de Documentación"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#1565C0"
+            android:layout_marginBottom="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerDocumentos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#1565C0"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/etNuevaUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Introduce nueva URL"
+            android:inputType="textUri"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btnActualizarUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Actualizar enlace"
+            android:backgroundTint="#388E3C"
+            android:textColor="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/btnCerrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_gravity="end"
+            android:backgroundTint="#B71C1C"
+            android:text="Cerrar"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>
+

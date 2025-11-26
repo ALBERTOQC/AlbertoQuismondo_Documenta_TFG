@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f0f0f0"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Generar Factura"
+            android:textColor="#004D99"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etNumeroFactura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Número de factura"
+            android:background="@drawable/et_bg"
+            android:padding="10dp"
+            android:enabled="false"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etFechaFactura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha"
+            android:background="@drawable/et_bg"
+            android:padding="10dp"
+            android:enabled="false"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:layout_marginBottom="12dp" />
+
+
+        <EditText
+            android:id="@+id/etCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cliente / Empresa"
+            android:background="@drawable/et_bg"
+            android:padding="10dp"
+            android:inputType="textPersonName"
+            android:textColor="#000000"
+            android:textColorHint="#666666" />
+
+        <EditText
+            android:id="@+id/etConcepto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Concepto"
+            android:background="@drawable/et_bg"
+            android:padding="10dp"
+            android:inputType="text"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:layout_marginTop="8dp"/>
+
+        <EditText
+            android:id="@+id/etBase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Base imponible (€)"
+            android:background="@drawable/et_bg"
+            android:padding="10dp"
+            android:inputType="numberDecimal"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:layout_marginTop="8dp"/>
+
+        <Spinner
+            android:id="@+id/spIva"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/spinner_bg"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/etCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo del destinatario"
+            android:background="@drawable/et_bg"
+            android:padding="10dp"
+            android:inputType="textEmailAddress"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/btnGenerarFacturaDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Generar factura"
+            android:backgroundTint="#00796B"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+
+
+    </LinearLayout>
+</ScrollView>
