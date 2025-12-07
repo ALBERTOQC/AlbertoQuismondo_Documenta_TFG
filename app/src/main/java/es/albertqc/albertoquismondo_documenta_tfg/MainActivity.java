@@ -2,10 +2,8 @@ package es.albertqc.albertoquismondo_documenta_tfg;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // --- CONFIGURACIÓN DEL TOOLBAR
+        //  CONFIGURACIÓN DEL TOOLBAR
         setSupportActionBar(binding.appBarMain.toolbar);
 
         // Colores corporativos

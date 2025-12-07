@@ -32,7 +32,6 @@ public class DocumentacionFragment extends Fragment {
     private final HashMap<String, String> otrosDocumentosMap = new HashMap<>();
 
     public DocumentacionFragment() {
-        // Constructor vacío obligatorio
     }
 
     @Override
@@ -100,7 +99,7 @@ public class DocumentacionFragment extends Fragment {
      * Carga los convenios y documentos desde Firestore y los guarda en mapas dinámicos.
      */
     private void cargarDocumentosFirestore() {
-        db.collection("documentos").document("documentos").get()
+        db.collection("documentos").document("estatuto").get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         // Cargar convenios por CCAA
@@ -113,15 +112,25 @@ public class DocumentacionFragment extends Fragment {
                         }
 
                         // Cargar otros documentos
-                        String[] otrosKeys = {"Estatuto", "Guía de Derechos", "Simuladores", "Contactos", "UGT", "CCOO", "USO"};
+                        String[] otrosKeys = {"url", "guiaDerechos", "simuladores", "contactos", "ccoo", "ugt", "uso"};
                         for (String key : otrosKeys) {
+                            String mapKey = "";
+                            if (key.equalsIgnoreCase("url")) mapKey = "Estatuto de los Trabajadores";
+                            else if (key.equalsIgnoreCase("guiaDerechos")) mapKey = "Guía de Derechos";
+                            else if (key.equalsIgnoreCase("simuladores")) mapKey = "Simuladores Laborales";
+                            else if (key.equalsIgnoreCase("contactos")) mapKey = "Contactos Útiles";
+                            else if (key.equalsIgnoreCase("ccoo")) mapKey = "CCOO";
+                            else if (key.equalsIgnoreCase("ugt")) mapKey = "UGT";
+                            else if (key.equalsIgnoreCase("uso")) mapKey = "USO";
+
                             if (documentSnapshot.contains(key)) {
-                                otrosDocumentosMap.put(key.equals("Estatuto") ? "Estatuto de los Trabajadores" : key,
-                                        documentSnapshot.getString(key));
+                                // Solo añade si la clave se pudo mapear
+                                if (!mapKey.isEmpty()) {
+                                    otrosDocumentosMap.put(mapKey, documentSnapshot.getString(key));
+                                }
                             }
                         }
                     } else {
-                        // Si falla Firestore, se usan URLs por defecto
                         inicializarConveniosPorDefecto();
                     }
                 })

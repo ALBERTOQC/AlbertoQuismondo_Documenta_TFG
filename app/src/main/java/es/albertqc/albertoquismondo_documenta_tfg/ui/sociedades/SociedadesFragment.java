@@ -42,7 +42,7 @@ public class SociedadesFragment extends Fragment {
 
         videoView.start();
 
-        // 🔑 Botón para acceder al área de clientes
+        // Botón para acceder al área de clientes
         Button btnAreaClientes = binding.btnAreaClientesSociedad;
         btnAreaClientes.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), RegistroLogin.class);

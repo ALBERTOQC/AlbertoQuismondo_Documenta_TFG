@@ -31,7 +31,6 @@
             android:layout_marginBottom="16dp"/>
 
 
-        <!-- INGRESOS -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +59,7 @@
             android:divider="@android:color/darker_gray"
             android:showDividers="middle"/>
 
-        <!-- GASTOS -->
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

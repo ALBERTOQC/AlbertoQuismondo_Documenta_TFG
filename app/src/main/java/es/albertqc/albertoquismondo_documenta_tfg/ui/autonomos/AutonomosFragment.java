@@ -31,8 +31,8 @@ public class AutonomosFragment extends Fragment {
         View root = binding.getRoot();
 
 
-        // 🎥 Configuración del VideoView
-        VideoView videoView = binding.videoAutonomos; // con A mayúscula
+        // Configuración del VideoView
+        VideoView videoView = binding.videoAutonomos;
         String videoPath = "android.resource://" + requireContext().getPackageName() + "/" + R.raw.videoautonomos;
         Uri uri = Uri.parse(videoPath);
         videoView.setVideoURI(uri);
@@ -41,10 +41,9 @@ public class AutonomosFragment extends Fragment {
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
 
-        videoView.start();
-        // se reproduce automáticamente
+        videoView.start();   // se reproduce automáticamente
 
-        // 🔑 Botón para acceder al área de clientes
+        // Botón para acceder al área de clientes
         Button btnAreaClientes = binding.btnAreaClientes;
         btnAreaClientes.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), RegistroLogin.class);

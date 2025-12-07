@@ -1,15 +1,18 @@
 package es.albertqc.albertoquismondo_documenta_tfg;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
-import android.os.Bundle;
+
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,44 +30,46 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class DialogoGenerarFacturaAutonomo extends DialogFragment {
+public class DialogoGenerarFacturaSociedades extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        final android.view.View view = inflater.inflate(R.layout.activity_dialogo_generar_factura_autonomo, null);
+        final View view = inflater.inflate(R.layout.activity_dialogo_generar_factura_sociedades, null);
         builder.setView(view);
 
         //  Nº FACTURA AUTOINCREMENTAL
-        // Formato: 2025 + contador (ser guarda en SharedPreferences)
-        SharedPreferences prefs = getContext().getSharedPreferences("FACTURAS", Context.MODE_PRIVATE);
-        int contador = prefs.getInt("contadorFactura", 1);  // empieza en 1
+        SharedPreferences prefs = getContext().getSharedPreferences("FACTURAS_SOCIEDADES", Context.MODE_PRIVATE);
+        int contador = prefs.getInt("contadorFacturaSociedad", 1);  // empieza en 1
         String numeroFactura = "2025" + contador;
 
-        // Mostrar número factura
         EditText etNumeroFactura = view.findViewById(R.id.etNumeroFactura);
-        etNumeroFactura.setText(numeroFactura);
+        if (etNumeroFactura != null) etNumeroFactura.setText(numeroFactura);
 
-        // fECHA ACTUAL
+        //  FECHA ACTUAL
         String fechaHoy = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
         EditText etFechaFactura = view.findViewById(R.id.etFechaFactura);
-        etFechaFactura.setText(fechaHoy);
-
+        if (etFechaFactura != null) etFechaFactura.setText(fechaHoy);
 
         AlertDialog dialog = builder.create();
 
         // Spinner IVA
         Spinner spIva = view.findViewById(R.id.spIva);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+        ArrayAdapter<String> adapterIva = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item, new String[]{"IVA 21%", "IVA 10%", "IVA 4%", "IVA 0%"});
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spIva.setAdapter(adapter);
+        adapterIva.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spIva.setAdapter(adapterIva);
 
-        // Botón generar PDF
-        Button btnGenerar = view.findViewById(R.id.btnGenerarFacturaDialog);
-        btnGenerar.setText("Generar factura");
+        // Spinner tipo documento
+        Spinner spTipo = view.findViewById(R.id.spTipoDocumento);
+        ArrayAdapter<String> adapterTipo = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, new String[]{"Factura", "Albarán"});
+        adapterTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spTipo.setAdapter(adapterTipo);
 
+        //  BOTÓN GENERAR
+        Button btnGenerar = view.findViewById(R.id.btnGenerarFacturaDialogSoc);
         btnGenerar.setOnClickListener(v -> {
             EditText etCliente = view.findViewById(R.id.etCliente);
             EditText etConcepto = view.findViewById(R.id.etConcepto);
@@ -73,6 +78,7 @@ public class DialogoGenerarFacturaAutonomo extends DialogFragment {
             String cliente = etCliente.getText().toString().trim();
             String concepto = etConcepto.getText().toString().trim();
             String baseStr = etBase.getText().toString().trim();
+            String tipoDocumento = (String) spTipo.getSelectedItem();
 
             if(cliente.isEmpty() || concepto.isEmpty() || baseStr.isEmpty()) {
                 Toast.makeText(getContext(), "Rellena todos los campos", Toast.LENGTH_SHORT).show();
@@ -80,13 +86,14 @@ public class DialogoGenerarFacturaAutonomo extends DialogFragment {
             }
 
             double base;
-            try { base = Double.parseDouble(baseStr); }
-            catch (NumberFormatException e) {
+            try {
+                base = Double.parseDouble(baseStr);
+            } catch (NumberFormatException e) {
                 Toast.makeText(getContext(), "Base no válida", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Extraer IVA
+            // IVA
             String ivaSeleccionado = (String) spIva.getSelectedItem();
             double ivaPercent = Double.parseDouble(ivaSeleccionado.replace("IVA ", "").replace("%",""));
             double iva = Math.round(base * ivaPercent / 100.0 * 100.0) / 100.0;
@@ -94,11 +101,14 @@ public class DialogoGenerarFacturaAutonomo extends DialogFragment {
 
             try {
                 File pdf = generarPdf(cliente, concepto, base, ivaPercent, iva, total,
-                        numeroFactura, fechaHoy);
-                abrirPdf(pdf); // abrimos PDF directamente
-                Toast.makeText(getContext(), "Factura generada: " + pdf.getName(), Toast.LENGTH_SHORT).show();
+                        numeroFactura, fechaHoy, tipoDocumento);
+
+                abrirPdf(pdf); // abrir PDF automáticamente
+
+                Toast.makeText(getContext(), tipoDocumento + " generado: " + pdf.getName(), Toast.LENGTH_SHORT).show();
+
                 // Guardar incremento del número de factura
-                prefs.edit().putInt("contadorFactura", contador + 1).apply();
+                prefs.edit().putInt("contadorFacturaSociedad", contador + 1).apply();
                 dialog.dismiss();
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -111,11 +121,11 @@ public class DialogoGenerarFacturaAutonomo extends DialogFragment {
 
     private File generarPdf(String cliente, String concepto, double base,
                             double ivaPer, double iva, double total,
-                            String numFactura, String fecha) throws IOException {
+                            String numFactura, String fecha, String tipoDocumento) throws IOException {
 
-        File dir = getContext().getExternalFilesDir("Facturas");
+        File dir = getContext().getExternalFilesDir("FacturasSociedades");
         if (!dir.exists()) dir.mkdirs();
-        File file = new File(dir, "factura_" + System.currentTimeMillis() + ".pdf");
+        File file = new File(dir, tipoDocumento.toLowerCase() + "_" + System.currentTimeMillis() + ".pdf");
 
         PdfDocument doc = new PdfDocument();
         PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(595, 842, 1).create();
@@ -128,10 +138,10 @@ public class DialogoGenerarFacturaAutonomo extends DialogFragment {
         // CABECERA
         paint.setTextSize(28);
         paint.setFakeBoldText(true);
-        paint.setColor(0xFF1565C0);
-        canvas.drawText("FACTURA DOCUMENTA", x, y, paint);
+        paint.setColor(0xFF00796B);
+        canvas.drawText("DOCUMENTA - " + tipoDocumento.toUpperCase(), x, y, paint);
 
-        y += 35;  // para dejar un espacio después del título
+        y += 35;
 
         // Línea separadora
         paint.setColor(0xFF000000);
@@ -139,7 +149,7 @@ public class DialogoGenerarFacturaAutonomo extends DialogFragment {
         canvas.drawLine(x, y, x + 500, y, paint);
         y += 25;
 
-        // BLOQUE FECHA Y NÚMERO DE FACTURA
+        // FECHA y Nº FACTURA
         paint.setTextSize(16);
         paint.setFakeBoldText(true);
         canvas.drawText("Fecha:", x, y, paint);
@@ -154,7 +164,7 @@ public class DialogoGenerarFacturaAutonomo extends DialogFragment {
 
         y += 40;
 
-        // BLOQUE CLIENTE Y CONCEPTO
+        // CLIENTE y CONCEPTO
         paint.setFakeBoldText(true);
         canvas.drawText("Cliente:", x, y, paint);
         paint.setFakeBoldText(false);
@@ -167,7 +177,7 @@ public class DialogoGenerarFacturaAutonomo extends DialogFragment {
         canvas.drawText(concepto, x + 90, y, paint);
         y += 40;
 
-        // TABLA DE IMPORTES
+        // TABLA IMPORTES
         paint.setFakeBoldText(true);
         canvas.drawText("Base", x + 10, y, paint);
         canvas.drawText("IVA (" + ivaPer + "%)", x + 180, y, paint);
@@ -181,7 +191,6 @@ public class DialogoGenerarFacturaAutonomo extends DialogFragment {
 
         y += 50;
 
-        // TOTAL DESTACADO
         paint.setTextSize(20);
         paint.setFakeBoldText(true);
         canvas.drawText("TOTAL: " + total + " €", x + 350, y, paint);
@@ -195,7 +204,6 @@ public class DialogoGenerarFacturaAutonomo extends DialogFragment {
 
         return file;
     }
-
 
     private void abrirPdf(File pdf) {
         try {
@@ -213,3 +221,4 @@ public class DialogoGenerarFacturaAutonomo extends DialogFragment {
         }
     }
 }
+

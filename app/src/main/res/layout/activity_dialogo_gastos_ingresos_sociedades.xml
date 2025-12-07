@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tvBalanceSoc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Balance: 0€"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#2E7D32"
+            android:padding="8dp"
+            android:gravity="center"
+            android:background="#E8F5E9"
+            android:layout_marginBottom="16dp" />
+
+
+        <Button
+            android:id="@+id/btnCalcularImpuestosSoc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calcular impuestos"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#289A1B"
+            android:padding="12dp"
+            android:layout_marginBottom="20dp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📈 INGRESOS"
+            android:textColor="#1565C0"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnAgregarIngresoSoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Añadir ingreso"
+            android:textColor="#FFF"
+            android:backgroundTint="#1565C0"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:id="@+id/layoutIngresosSoc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:divider="?android:attr/dividerVertical"
+            android:showDividers="middle"
+            android:paddingBottom="16dp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📉 GASTOS"
+            android:textColor="#C62828"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnAgregarGastoSoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Añadir gasto"
+            android:textColor="#FFF"
+            android:backgroundTint="#C62828"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:id="@+id/layoutGastosSoc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:divider="?android:attr/dividerVertical"
+            android:showDividers="middle" />
+
+    </LinearLayout>
+</ScrollView>
+

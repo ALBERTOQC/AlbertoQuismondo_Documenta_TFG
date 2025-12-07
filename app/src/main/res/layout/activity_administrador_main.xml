@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- FILTROS -->
     <TextView
         android:id="@+id/txtTituloAdmin"
         android:layout_width="wrap_content"
@@ -53,14 +52,12 @@
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
-    <!-- RECYCLER -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerUsuariosAdmin"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <!-- CREAR MIEMBRO -->
     <Button
         android:id="@+id/btnCrearMiembro"
         android:layout_width="match_parent"
@@ -86,7 +83,6 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="#388E3C"/>
 
-    <!-- BLOQUE: Actualizar enlaces de Documentación -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

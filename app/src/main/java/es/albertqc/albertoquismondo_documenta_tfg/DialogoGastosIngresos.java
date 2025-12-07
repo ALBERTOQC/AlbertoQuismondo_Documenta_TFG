@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -70,7 +69,7 @@ public class DialogoGastosIngresos extends DialogFragment {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(40,40,40,40);
 
-        // FECHA con DatePicker
+        // Feccha para el ingreso con DatePicker
         Button btnFecha = new Button(getContext());
         btnFecha.setText("Seleccionar fecha");
         layout.addView(btnFecha);
@@ -96,7 +95,7 @@ public class DialogoGastosIngresos extends DialogFragment {
         etConcepto.setHint("Concepto");
         layout.addView(etConcepto);
 
-        // NUEVO: Número de factura
+        // Número de factura
         EditText etFactura = new EditText(getContext());
         etFactura.setHint("Número de factura");
         layout.addView(etFactura);
@@ -107,7 +106,7 @@ public class DialogoGastosIngresos extends DialogFragment {
         layout.addView(etImporte);
 
         EditText etMetodo = new EditText(getContext());
-        etMetodo.setHint("Método de pago");  // cambiado
+        etMetodo.setHint("Método de pago");
         layout.addView(etMetodo);
 
 
@@ -165,7 +164,7 @@ public class DialogoGastosIngresos extends DialogFragment {
         etConcepto.setHint("Concepto");
         layout.addView(etConcepto);
 
-        // NUEVO: Número de factura
+        //Número de factura
         EditText etFactura = new EditText(getContext());
         etFactura.setHint("Número de factura");
         layout.addView(etFactura);

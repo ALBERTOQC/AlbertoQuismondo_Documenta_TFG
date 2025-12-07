@@ -13,7 +13,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- CABECERA -->
         <ImageView
             android:id="@+id/imageViewHeader"
             android:layout_width="match_parent"
@@ -21,7 +20,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/documenta" />
 
-        <!-- DESCRIPCIÓN -->
         <TextView
             android:id="@+id/textViewDescripcion"
             android:layout_width="match_parent"
@@ -33,7 +31,6 @@
             android:textSize="14sp"
             android:lineSpacingExtra="4dp" />
 
-        <!-- TARJETA AUTÓNOMOS -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardAutonomos"
             android:layout_width="match_parent"
@@ -70,7 +67,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- TARJETA SOCIEDADES -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardSociedades"
             android:layout_width="match_parent"
@@ -107,7 +103,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- TARJETA DOCUMENTACIÓN -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardDocumentacion"
             android:layout_width="match_parent"

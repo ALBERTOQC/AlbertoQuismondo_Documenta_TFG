@@ -159,7 +159,7 @@ public class AgendaAutonomoDialog extends DialogFragment {
         if (db != null) db.close();
     }
 
-    // ---- Clases internas para adaptador personalizado ----
+    // Clases internas para adaptador personalizado
     private static class Evento {
         String fecha;
         String descripcion;
